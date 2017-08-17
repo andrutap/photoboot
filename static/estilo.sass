@@ -1,0 +1,271 @@
+$desktop-large: 1366px
+$desktop-small: 1280px
+$tablet: 1024px
+$medium-screen: 900px
+$mobile: 768px
+$small: 480px
+$buttonHover: #1abc9c
+
+=desktop-large
+  @media screen and (min-width: $desktop-large)
+    @content
+
+=desktop-small
+  @media screen and (min-width: $desktop-small) and (max-width: $desktop-large - 1)
+    @content
+
+=desktop-smaller
+  @media screen and (min-width: $tablet) and (max-width: $desktop-small - 1)
+    @content
+
+=tablet-landscape
+  @media screen and (max-width: $tablet) and (orientation: landscape)
+    @content
+
+=tablet-portrait
+  @media screen and (min-width: $mobile) and (max-width: $tablet) and (orientation: portrait)
+    @content
+
+=handheld
+  @media screen and (max-width: $tablet)
+    @content
+
+=medium
+  @media screen and (max-width: $medium-screen)
+    @content
+
+=mobile
+  @media screen and (max-width: $mobile - 1)
+    @content
+
+=mobile-landscape
+  @media screen and (max-width: $mobile - 1) and (orientation: landscape)
+    @content
+
+=small
+  @media screen and (max-width: $small)
+    @content
+
+=hf
+  &:focus,
+  &:hover
+    @content
+
+*
+  box-sizing: border-box
+  &:before,
+  &:after
+    box-sizing: border-box
+
+html,
+body
+  font-family: sans-serif
+  margin: 0
+  box-sizing: border-box
+  font-size: 14px
+  background: whitesmoke
+
+main
+  margin: 0 auto
+  width: 100%
+
+canvas
+  margin: 0 auto
+  display: block
+  max-width: 100%
+
+img
+  display: block
+
+button,
+.button
+  -webkit-appearance: none
+  appearance: none
+  overflow: visible
+  line-height: 1.4
+  cursor: pointer
+
+.video
+  height: 400px
+  z-index: 2
+  margin: 0 auto
+  display: block
+  transform: scaleX(-1)
+  +mobile
+    max-width: 100%
+    height: initial
+
+.row
+  display: flex
+  flex:
+    direction: row
+    wrap: wrap
+  +handheld
+    flex-direction: row-reverse
+
+.tile
+  display: block
+  flex: 1 1 0
+  +handheld
+    flex: 0 1 100%
+
+.box
+  margin: 0 auto
+  +desktop-large
+    width: $desktop-large - 156px
+  +desktop-small
+    width: $desktop-small - 156px
+  +desktop-smaller
+    width: $desktop-small - 256px
+  +handheld
+    width: $tablet
+  +tablet-landscape
+    width: $tablet - 156px
+  +medium
+    width: $medium-screen - 156px
+  +mobile
+    width: 100% !important
+
+.is-instructions
+  display: block
+  height: 100%
+  height: 100vh
+  width: 100%
+  background: whitesmoke
+
+.is-big-list
+  margin: 0
+  list-style: none
+  width: 100%
+  li
+    margin-bottom: 1em
+    &:last-of-type
+      margin-bottom: 0
+
+.app-container
+  position: relative
+
+.menu
+  width: 90%
+  box-shadow: 0px 4px 6px rgba(black, .125)
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  min-height: 400px
+  display: flex
+  align-items: center
+  background: white
+  .is-menu-header
+    width: 150px
+    height: 150px
+    position: absolute
+    top: -75px
+    left: 50%
+    transform: translateX(-50%)
+    img
+      max-width: 100%
+      border-radius: .5rem
+      border: 2px solid white
+
+.button
+  padding: .75em
+  border-radius: 100px
+  &.is-menu
+    border: thin solid black
+    width: 50%
+    font-size: 1.5rem
+    background:
+      color: white
+    +hf
+      background:
+        color: $buttonHover
+      color: white
+      border-color: $buttonHover
+    +handheld
+      width: 80%
+
+
+.camera-container
+  margin: 0 auto
+  display: block
+  background: white
+  padding: .75rem
+  min-height: 100vh
+  +mobile
+    padding: 0
+
+.camera-menu
+  display: flex
+  width: 600px
+  margin: 0 auto
+  +mobile
+    flex-direction: column-reverse
+    width: 100%
+  &.button-group
+    .item
+      border-radius: 0px
+      border-right: 0
+      &:first-child
+        border-top-left-radius: 40px
+        border-bottom-left-radius: 40px
+      &:last-child
+        border-top-right-radius: 40px
+        border-bottom-right-radius: 40px
+        border-right: thin solid black
+    +mobile
+      .item
+        border-radius: 40px
+        width: 95%
+        margin-right: auto
+        margin-left: auto
+        &:first-child
+          border-right: thin solid black
+  .item
+    border: thin solid black
+    display: block
+    flex: 1 1 0
+    cursor: pointer
+    margin-top: .5rem
+    text-align: center
+    padding: .325em
+    font-size: 1.2rem
+    border-radius: 40px
+    &.is-active
+      background: $buttonHover
+      color: white
+    +hf
+      background: $buttonHover
+      color: white
+    +mobile
+      width: 95%
+      margin:
+        left: auto
+        right: auto
+
+.text-center
+  text-align: center
+
+.fake-canvas
+  width: 400px
+  height: 400px
+  background:
+    position: center
+
+.horizontal-list
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  li
+    display: block
+    flex: 1 1 200px
+    img
+      max-width: 200px
+
+.fakeFrames
+  width: 400px
+  height: 400px
+  position: absolute
+  left: 50%
+  transform: translateX(-50%)
+  z-index: 2
