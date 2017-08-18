@@ -3,7 +3,6 @@ var webcamStream, mediaStream
 export function cameraInit () {
     navigator.mediaDevices.getUserMedia({
       video: {
-        facingMode: 'user',
         width: 400,
         height: 400
       },

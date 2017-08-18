@@ -1,7 +1,7 @@
 <template lang="html">
-  <nav class="camera-menu" :class="{'button-group': photoTaken}">
+  <nav class="horizontal-list nav" :class="{'button-group': photoTaken}">
     <span class="item" @click="takePic">
-      <span class="icon icon-basic-photo"></span> Tomar foto
+      Tomar foto
     </span>
   </nav>
 </template>

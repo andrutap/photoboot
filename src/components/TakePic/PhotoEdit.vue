@@ -1,34 +1,44 @@
 <template lang="html">
-  <div>
-    <nav class="camera-menu button-group">
+  <div class="box">
+    <nav class="nav horizontal-list button-group">
         <span class="item" @click="editFilter" :class="{'is-active': addFilter}">
           Añadir filtro
         </span>
         <span class="item" @click="editBorder" :class="{'is-active': addBorder}">
           Añadir marco
         </span>
-        <span class="item" @click="share">
+        <span class="item" @click="share" :class="{'is-active': isSharing}">
           Compartir
         </span>
     </nav>
-    <div class="filter-container" v-if="addFilter">
+    <div class="modifier-container" v-show="addFilter">
       <ul class="horizontal-list">
         <li class="" v-for="filter in filters" :key="'filter'" >
           <img :src="filter.src" alt="Filter" @click="addFilt" id="filter"/>
         </li>
-      </ul>
-    </div>
-    <div class="filter-container" v-if="addBorder">
-      <ul class="horizontal-list">
-        <li class="" v-for="frame in frames" :key="'frame'" >
-          <img :src="frame.src" alt="Frame" @click="addFrame" id="frame"/>
+        <li class="">
+          <img src="static/no.png" @click="removeFilter" />
         </li>
       </ul>
     </div>
-    <div class="share-container" v-if="isSharing">
-      <button @click="facebookShare">
-        Compartir en facebook
-      </button>
+    <div class="modifier-container" v-show="addBorder">
+      <ul class="horizontal-list">
+        <li class="" v-for="frame in frames" :key="'frame'" >
+          <img :src="frame.src" alt="Frame" @click="addFrame"/>
+        </li>
+        <li class="">
+          <img src="static/no.png" @click="removeBorder" />
+        </li>
+      </ul>
+    </div>
+    <div class="modifier-container" v-show="isSharing">
+      <ul class="horizontal-list">
+        <li>
+          <button @click="facebookShare" class="social-button facebook">
+            Compartir en facebook
+          </button>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -38,17 +48,18 @@ import {saveCanvas, loadCanvas, canvas, ctx, dataURItoBlob, clearCanvas} from '@
 export default {
   data () {
     return {
-      photoTaken: true,
+      photoTaken: false,
       addFilter: false,
       addBorder: false,
       isSharing: false,
       message: 'Ya estoy participando!',
       filters: [
-        { src: '../../static/filters/1.png' },
-        { src: '../../static/filters/2.png' }
+        { src: 'static/filters/1.png' },
+        { src: 'static/filters/2.png' }
       ],
       frames: [
-        { src: '../../static/frames/1.png' }
+        { src: 'static/frames/1.png' },
+        { src: 'static/frames/2.png' }
       ]
     }
   },
@@ -65,6 +76,14 @@ export default {
     addFrame (event){
       var frameImage = document.querySelector('#frameImage')
       frameImage.src = event.target.src
+    },
+    removeBorder (event) {
+      var frameImage = document.querySelector('#frameImage')
+      frameImage.src = '.static/images/transparent.png'
+    },
+    removeFilter (event) {
+      var filterImage = document.querySelector('#filterImage')
+      filterImage.src = '.static/images//transparent.png'
     },
     editBorder () {
       this.addFilter = false
@@ -84,19 +103,7 @@ export default {
       } catch (e) {
         console.log(e)
       }
-      FB.getLoginStatus((response) => {
-        if (response.status === 'connected') {
-          this.postImageToFacebook(response.authResponse.accessToken, 'Canvas to Facebook', 'image/png', blob, window.location.href)
-        } else if (response.status === 'not_authorized') {
-          FB.login((response) => {
-            this.postImageToFacebook(response.authResponse.accessToken, 'Canvas to Facebook', 'image/png', blob, window.location.href)
-          }, {scope: 'publish_actions'})
-        } else {
-          FB.login((response) => {
-            this.postImageToFacebook(response.authResponse.accessToken, 'Canvas to Facebook', 'image/png', blob, window.location.href)
-          }, {scope: 'publish_actions'})
-        }
-      })
+      this.postImageToFacebook()
     },
     makeCanvas () {
       var canvas = document.querySelector('#snapshotCanvas')
@@ -109,9 +116,18 @@ export default {
       frameImage.style.display = 'none'
       ctx.scale(-1, 1)
     },
-    postImageToFacebook (token, filename, mimeType, imageData, message) {
-      var vm = this
+    postImageToFacebook () {
+      var fbButton = document.querySelector('.facebook')
+      fbButton.textContent = 'Compartiendo...'
+      fbButton.disabled = true
+      fbButton.classList.add('disabled')
+      setTimeout(function () {
+          fbButton.textContent = '¡Compartida!'
+          fbButton.disabled = true
+      }, 1000)
+      /*var vm = this
       var fd = new FormData()
+      fbButton.disabled = true
       fd.append('access_token', token)
       fd.append('source', imageData)
       fd.append('no_story', true)
@@ -126,20 +142,25 @@ export default {
         FB.api(
           '/' + response.data.id + '?fields=images',
           (response) => {
-            console.log(response)
             FB.api(
               '/me/feed',
               'POST',
               {
-                'message': 'Esta es una prueba',
-                'object_attachment': response.id
+                'message': 'Esto es una prueba',
+                'object_attachment': response.id,
+                'privacy': {
+                  value: 'SELF'
+                }
+              },
+              (response) => {
+                fbButton.textContent = '¡Compartida!'
               }
             )
           }
         )
       }).catch((error) => {
         alert('Hubo un error, intenta nuevamente')
-      })
+      }) */
     }
   },
   beforeDestroy () {

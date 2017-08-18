@@ -1,7 +1,7 @@
 <template lang="html">
-  <nav class="camera-menu" :class="{'button-group': uploadedImage}">
+  <nav class="nav horizontal-list" :class="{'button-group': uploadedImage}">
     <label for="uploadPic" class="item">Subir foto</label>
-    <input style="display:none" type="file" name="uploadPic" id="uploadPic" accept="image/*" capture="user" @change="preloadImage"/>
+    <input style="display:none" type="file" name="uploadPic" id="uploadPic" accept="image/*" @change="preloadImage"/>
     <span class="item" @click="saveImage" v-if="uploadedImage">
       Usar esta foto
     </span>
@@ -20,6 +20,8 @@ export default {
     preloadImage (event) {
       drawFromUpload (event)
       this.uploadedImage = true
+      var canvas = document.querySelector('#snapshotCanvas')
+      canvas.style.backgroundImage = 'none'
     },
     saveImage () {
       this.photoTaken = true

@@ -5,6 +5,12 @@
           <span v-if="!isIOS">Sácate o sube una foto</span>
           <span v-else>Sube una foto</span>
         </li>
+        <li>
+          Edítala y compártela
+        </li>
+        <li>
+          Felicidades, ya estarás participando
+        </li>
       </ul>
   </div>
 </template>

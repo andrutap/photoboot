@@ -27,7 +27,7 @@ export function drawFakeImage () {
     var canvas = document.querySelector('#snapshotCanvas')
     var ctx = canvas.getContext('2d')
     var image = new Image()
-    image.src = '../static/fakeCanvas.jpg'
+    image.src = 'static/fakeCanvas.jpg'
     ctx.drawImage(image, 0, 0)
 }
 

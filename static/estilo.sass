@@ -1,3 +1,24 @@
+@font-face
+    font-family: "HM AmpersandDispRegular"
+    font-style: normal
+    font-weight: normal
+    src: url("fonts/hmampersanddisp-regular-webfont.woff") format('woff')
+    src: url("fonts/hmampersanddisp-regular-webfont.woff2") format('woff2')
+
+@font-face
+    font-family: "HM AmpersandDispRegular Bold"
+    font-style: normal
+    font-weight: bold
+    src: url("fonts/hmampersanddisp-bold-webfont.woff") format('woff')
+    src: url("fonts/hmampersanddisp-bold-webfont.woff2") format('woff2')
+
+@font-face
+    font-family: "HM AmperserifDisp"
+    font-style: normal
+    font-weight: normal
+    src: url("fonts/hmamperserifdisp-regular-webfont.woff") format('woff')
+    src: url("fonts/hmamperserifdisp-regular-webfont.woff2") format('woff2')
+
 $desktop-large: 1366px
 $desktop-small: 1280px
 $tablet: 1024px
@@ -5,6 +26,7 @@ $medium-screen: 900px
 $mobile: 768px
 $small: 480px
 $buttonHover: #1abc9c
+$facebook: #3b5998
 
 =desktop-large
   @media screen and (min-width: $desktop-large)
@@ -73,6 +95,9 @@ canvas
   margin: 0 auto
   display: block
   max-width: 100%
+  background:
+    image: url('./fakeCanvas.jpg')
+    size: contain
 
 img
   display: block
@@ -90,7 +115,6 @@ button,
   z-index: 2
   margin: 0 auto
   display: block
-  transform: scaleX(-1)
   +mobile
     max-width: 100%
     height: initial
@@ -128,19 +152,76 @@ button,
 
 .is-instructions
   display: block
-  height: 100%
-  height: 100vh
+  min-height: 100%
+  min-height: 100vh
   width: 100%
-  background: whitesmoke
+  font-family: 'HM AmpersandDispRegular Bold', sans-serif
+  font-weight: bold
+  color: white
+  font-size: 3rem
+  background: whitesmoke url('./bg.jpg') center top no-repeat
+  box-shadow: -2px 0px 10px -2px rgba(black, .25) inset
+  text-align: center
+  padding:
+    top: 25%
+  +handheld
+    padding:
+      top: 10%
+  +mobile
+    font-size: 2rem
 
 .is-big-list
   margin: 0
   list-style: none
   width: 100%
+  padding: .25rem
   li
     margin-bottom: 1em
     &:last-of-type
       margin-bottom: 0
+
+.nav
+  text-align: center
+  .item
+    border: 0
+    background: transparent
+    font-family: 'HM AmpersandDispRegular Bold', sans-serif
+    text-transform: uppercase
+    width: 50%
+    margin-bottom: 2em
+    padding: 2em 4em
+    letter-spacing: 1px
+    border-radius: 3em
+    cursor: pointer
+    +handheld
+      width: 90%
+    +hf
+      background: linear-gradient(45deg, #5465e2, #d37de2)
+      color: white
+    &.is-active
+      background: linear-gradient(45deg, #5465e2, #d37de2)
+      color: white
+  &.horizontal-list
+    justify-content: center
+    margin-top: 1rem
+    .item
+      width: auto
+      padding: 1em 2em
+    &.button-group
+      .item
+        border-radius: 0
+        border-right: .5px solid silver
+        &:first-child
+          border-top-left-radius: 3rem
+          border-bottom-left-radius: 3rem
+        &:last-child
+          border-top-right-radius: 3rem
+          border-bottom-right-radius: 3rem
+          border-right: 0
+        +mobile
+          border-radius: 3rem
+          padding: .5em .5em
+          border: 0
 
 .app-container
   position: relative
@@ -168,24 +249,6 @@ button,
       border-radius: .5rem
       border: 2px solid white
 
-.button
-  padding: .75em
-  border-radius: 100px
-  &.is-menu
-    border: thin solid black
-    width: 50%
-    font-size: 1.5rem
-    background:
-      color: white
-    +hf
-      background:
-        color: $buttonHover
-      color: white
-      border-color: $buttonHover
-    +handheld
-      width: 80%
-
-
 .camera-container
   margin: 0 auto
   display: block
@@ -194,57 +257,6 @@ button,
   min-height: 100vh
   +mobile
     padding: 0
-
-.camera-menu
-  display: flex
-  width: 600px
-  margin: 0 auto
-  +mobile
-    flex-direction: column-reverse
-    width: 100%
-  &.button-group
-    .item
-      border-radius: 0px
-      border-right: 0
-      &:first-child
-        border-top-left-radius: 40px
-        border-bottom-left-radius: 40px
-      &:last-child
-        border-top-right-radius: 40px
-        border-bottom-right-radius: 40px
-        border-right: thin solid black
-    +mobile
-      .item
-        border-radius: 40px
-        width: 95%
-        margin-right: auto
-        margin-left: auto
-        &:first-child
-          border-right: thin solid black
-  .item
-    border: thin solid black
-    display: block
-    flex: 1 1 0
-    cursor: pointer
-    margin-top: .5rem
-    text-align: center
-    padding: .325em
-    font-size: 1.2rem
-    border-radius: 40px
-    &.is-active
-      background: $buttonHover
-      color: white
-    +hf
-      background: $buttonHover
-      color: white
-    +mobile
-      width: 95%
-      margin:
-        left: auto
-        right: auto
-
-.text-center
-  text-align: center
 
 .fake-canvas
   width: 400px
@@ -258,9 +270,38 @@ button,
   flex-wrap: wrap
   li
     display: block
-    flex: 1 1 200px
+    flex: 0 1 50px
+    margin-right: 20px
     img
-      max-width: 200px
+      max-width: 100px
+    +hf
+      background: rgba(black, .25)
+      cursor: pointer
+
+.modifier-container
+  .horizontal-list
+    justify-content: center
+    li
+      flex: 0 1 auto
+  +mobile
+    overflow-x: scroll
+    .horizontal-list
+      flex-wrap: nowrap
+      justify-content: flex-start
+
+
+.social-button
+  color: white
+  padding: .75em 3em
+  border: 0
+  &.facebook
+    background-color: $facebook
+    +hf
+      background-color: darken($facebook, 5%)
+    &:disabled,
+    &.disabled
+      background-color: lighten($facebook, 25%)
+      cursor: not-allowed
 
 .fakeFrames
   width: 400px
@@ -269,3 +310,7 @@ button,
   left: 50%
   transform: translateX(-50%)
   z-index: 2
+  +handheld
+    max-width: 100%
+    width: initial
+    height: initial

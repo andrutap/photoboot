@@ -11,7 +11,7 @@ import UploadMenu from '@/components/UploadPic/Menu'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  base: 'https://demos.mingadigital.com/display/hm/ld3/',
   routes: [
     {
       path: '/',
